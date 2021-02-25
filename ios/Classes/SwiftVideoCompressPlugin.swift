@@ -143,7 +143,7 @@ public class SwiftVideoCompressPlugin: NSObject, FlutterPlugin {
     private func getExportPreset(_ quality: NSNumber)->String {
         switch(quality) {
         case 1:
-            return AVAssetExportPreset640x480
+            return AVAssetExportPresetMediumQuality
         case 2:
             return AVAssetExportPreset640x480
         case 3:

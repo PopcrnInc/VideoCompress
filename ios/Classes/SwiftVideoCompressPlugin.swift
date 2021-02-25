@@ -145,9 +145,9 @@ public class SwiftVideoCompressPlugin: NSObject, FlutterPlugin {
         case 1:
             return AVAssetExportPresetMediumQuality
         case 2:
-            return AVAssetExportPreset640x480
+            return AVAssetExportPresetMediumQuality
         case 3:
-            return AVAssetExportPreset640x480
+            return AVAssetExportPresetMediumQuality
         default:
             return AVAssetExportPresetMediumQuality
         }

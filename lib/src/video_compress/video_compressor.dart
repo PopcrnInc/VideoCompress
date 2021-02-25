@@ -120,7 +120,7 @@ extension Compress on IVideoCompress {
   /// ```
   Future<MediaInfo> compressVideo(
     String path, {
-    VideoQuality quality,
+    VideoQuality quality = VideoQuality.DefaultQuality,
     bool deleteOrigin = false,
     int startTime,
     int duration,

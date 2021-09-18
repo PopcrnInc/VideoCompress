@@ -15,7 +15,7 @@ class _VideoCompressImpl extends IVideoCompress {
     initProcessCallback();
   }
 
-  static _VideoCompressImpl _instance;
+  static _VideoCompressImpl? _instance;
   static _VideoCompressImpl get instance {
     return _instance ??= _VideoCompressImpl._();
   }
@@ -33,8 +33,8 @@ extension Compress on IVideoCompress {
     _VideoCompressImpl._dispose();
   }
 
-  Future<T> _invoke<T>(String name, [Map<String, dynamic> params]) async {
-    T result;
+  Future<T?> _invoke<T>(String name, [Map<String, dynamic>? params]) async {
+    T? result;
     try {
       result = params != null
           ? await channel.invokeMethod(name, params)
@@ -50,7 +50,7 @@ extension Compress on IVideoCompress {
   /// getByteThumbnail return [Future<Uint8List>],
   /// quality can be controlled by [quality] from 1 to 100,
   /// select the position unit in the video by [position] is seconds
-  Future<Uint8List> getByteThumbnail(
+  Future<Uint8List?> getByteThumbnail(
     String path, {
     int quality = 100,
     int position = -1,
@@ -76,11 +76,11 @@ extension Compress on IVideoCompress {
     assert(path != null);
     assert(quality > 1 || quality < 100);
 
-    final filePath = await _invoke<String>('getFileThumbnail', {
+    final filePath = await (_invoke<String>('getFileThumbnail', {
       'path': path,
       'quality': quality,
       'position': position,
-    });
+    }) as FutureOr<String>);
 
     final file = File(filePath);
 
@@ -98,7 +98,7 @@ extension Compress on IVideoCompress {
   /// ```
   Future<MediaInfo> getMediaInfo(String path) async {
     assert(path != null);
-    final jsonStr = await _invoke<String>('getMediaInfo', {'path': path});
+    final jsonStr = await (_invoke<String>('getMediaInfo', {'path': path}) as FutureOr<String>);
     final jsonMap = json.decode(jsonStr);
     return MediaInfo.fromJson(jsonMap);
   }
@@ -118,13 +118,13 @@ extension Compress on IVideoCompress {
   /// );
   /// debugPrint(info.toJson());
   /// ```
-  Future<MediaInfo> compressVideo(
+  Future<MediaInfo?> compressVideo(
     String path, {
     VideoQuality quality = VideoQuality.DefaultQuality,
     bool deleteOrigin = false,
-    int startTime,
-    int duration,
-    bool includeAudio,
+    int? startTime,
+    int? duration,
+    bool? includeAudio,
     int frameRate = 30,
   }) async {
     assert(path != null);
@@ -169,7 +169,7 @@ extension Compress on IVideoCompress {
 
   /// delete the cache folder, please do not put other things
   /// in the folder of this plugin, it will be cleared
-  Future<bool> deleteAllCache() async {
+  Future<bool?> deleteAllCache() async {
     return await _invoke<bool>('deleteAllCache');
   }
 
